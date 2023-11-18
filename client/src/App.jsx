@@ -28,9 +28,11 @@ function App() {
             <Link to="/signup" className="text-white">Sign Up</Link>
           </div>
         ) : (
-          <div className="flex space-x-4">
+          <div className="flex flex-row justify-between px-10">
+            <div className='flex flex-row gap-10'>             
             <Link to="/homepage" className="text-white">Home</Link>
             <Link to="/createpost" className="text-white">Create Post</Link>
+            </div>
             <button onClick={signUserOut} className="text-white">Log Out</button>
           </div>
         )}
