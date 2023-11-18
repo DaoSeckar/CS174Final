@@ -34,7 +34,7 @@ const CreatePost = () => {
         formData.append("title", title);
         formData.append("content", postText);
         // compress image before uploading to firebase storage
-        const compressedImage = await compressImage(img);
+        const compressedImage = await compressImage(img, 800, 600);
         formData.append("img", compressedImage);
         const response = await fetch("http://localhost:3000/create-post", {
           method: "POST",
@@ -53,9 +53,11 @@ const CreatePost = () => {
       }
   };
 
-  const compressImage = (file) => {
+  const compressImage = (file, maxWidth, maxHeight) => {
     return new Promise((resolve, reject) => {
       new Compressor(file, {
+        maxWidth, // Set the maximum width
+        maxHeight, // Set the maximum height
         quality: 0.6, // Adjust the quality as needed (0 to 1)
         success(result) {
           resolve(result);

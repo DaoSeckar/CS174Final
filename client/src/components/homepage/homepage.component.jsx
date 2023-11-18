@@ -59,6 +59,13 @@ function Home() {
     }
   };
 
+  const arrayBufferToBase64 = (buffer) => {
+    var binary = '';
+    var bytes = new Uint8Array(buffer);
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return window.btoa(binary);
+  };
+
   return (
     <div className="grid gap-4 p-20">
       <h1 className="text-center text-xl">Your Blog Posts</h1>
@@ -71,7 +78,7 @@ function Home() {
           <div key={post.post_id} className="relative border p-6 rounded-lg shadow-md bg-white">
             <div className="flex items-center m-4">
               <img
-                src={`data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null, new Uint8Array(post.img.data)))}`}
+                src={`data:image/jpeg;base64,${arrayBufferToBase64(post.img.data)}`}
                 alt={`Post ${post.post_id}`}
                 className="w-48 h-48 object-cover mr-4"
                 loading="lazy"
