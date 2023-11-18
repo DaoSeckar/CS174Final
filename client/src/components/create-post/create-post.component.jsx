@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {auth} from '../../firebase-config'
-//const axios = require('axios');
 import { useNavigate } from "react-router-dom";
+import Compressor from "image-compressor.js";
 
 const defaultFormFields = {
     img: null,
@@ -13,7 +13,7 @@ const CreatePost = () => {
   let navigate = useNavigate();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { title, postText } = formFields;
-  const [img, setImg] = useState(null); // Separate state for image
+  const [img, setImg] = useState(null);
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
@@ -31,9 +31,11 @@ const CreatePost = () => {
       try {
         const formData = new FormData();
         formData.append("userId", auth?.currentUser?.uid);
-        formData.append("img", img || "");
         formData.append("title", title);
         formData.append("content", postText);
+        // compress image before uploading to firebase storage
+        const compressedImage = await compressImage(img);
+        formData.append("img", compressedImage);
         const response = await fetch("http://localhost:3000/create-post", {
           method: "POST",
           body: formData,
@@ -49,6 +51,20 @@ const CreatePost = () => {
       } catch (error) {
           console.error("Error posting data:", error);
       }
+  };
+
+  const compressImage = (file) => {
+    return new Promise((resolve, reject) => {
+      new Compressor(file, {
+        quality: 0.6, // Adjust the quality as needed (0 to 1)
+        success(result) {
+          resolve(result);
+        },
+        error(error) {
+          reject(error);
+        },
+      });
+    });
   };
 
   return (

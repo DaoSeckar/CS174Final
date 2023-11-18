@@ -22,6 +22,7 @@ function Home() {
         const data = await response.json();
         if (response.status === 200) {
           setBlogPosts(data);
+          console.log(data)
           setIsLoading(false);
         } else {
           throw new Error("Error");
@@ -35,7 +36,7 @@ function Home() {
   }, []);
 
   const formatCreatedAt = (createdAt) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'PST' };
     return new Date(createdAt).toLocaleString('en-US', options);
   };
 
@@ -69,17 +70,18 @@ function Home() {
         blogPosts.map((post) => (
           <div key={post.post_id} className="relative border p-6 rounded-lg shadow-md bg-white">
             <div className="flex items-center m-4">
-              <img 
-                src={`data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null, new Uint8Array(post.img.data)))}`} 
-                alt={`Post ${post.post_id}`} 
-                className="w-32 h-32 object-cover rounded-full mr-4" 
+              <img
+                src={`data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null, new Uint8Array(post.img.data)))}`}
+                alt={`Post ${post.post_id}`}
+                className="w-48 h-48 object-cover mr-4"
+                loading="lazy"
               />
               <div>
                 <h2 className="text-xl font-bold">{post.title}</h2>
                 <p className="text-gray-500 text-sm">{formatCreatedAt(post.created_at)}</p>
               </div>
             </div>
-            <p className="text-gray-700">
+            <p className="text-gray-700 m-4">
               {expandedContent[post.post_id] || post.content.length <= 200
                 ? post.content
                 : `${post.content.substring(0, 200)}... `}

@@ -35,7 +35,6 @@ const SignInForm = ({setIsAuth}) =>{
         event.preventDefault();
         try {
             const response = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log(response);
             resetFormFields();
             localStorage.setItem('isAuth', true);
             localStorage.setItem('userUid', auth.currentUser.uid);

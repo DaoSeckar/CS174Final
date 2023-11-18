@@ -14,10 +14,12 @@ const app = express();
 
 //Middleware
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+});
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -35,20 +37,24 @@ db.connect((err) => {
 });
 
 app.post('/create-post', upload.fields([{ name: 'img', maxCount: 1 }]), async (req, res) => {
-    try {
-        const { userId, title, content } = req.body;
-        const img = req.files['img'][0].buffer;
-        const sql = 'INSERT INTO blog_posts (user_id, img, title, content) VALUES (?, ?, ?, ?)';
-        db.query(sql, [userId, img, title, content], (err, result) => {
-            if (err) throw err;
-            console.log('Blog post inserted');
-            res.status(200).send('Blog post created successfully');
-        });
-    }catch (error) {
-        console.error('Error creating blog post:', error);
-        res.status(500).send('Internal Server Error');
-    }
-});
+  try {
+      const { userId, title, content } = req.body;
+      const img = req.files['img'][0].buffer;
+      const sql = 'INSERT INTO blog_posts (user_id, img, title, content) VALUES (?, ?, ?, ?)';
+      db.query(sql, [userId, img, title, content], (err, result) => {
+          if (err) {
+              console.error('Error inserting blog post:', err);
+              res.status(500).send('Internal Server Error');
+          } else {
+              console.log('Blog post inserted');
+              res.status(200).send('Blog post created successfully');
+          }
+      });
+  } catch (error) {
+      console.error('Error creating blog post:', error);
+      res.status(500).send('Internal Server Error');
+  }
+})
 
 app.get('/get-post/:user_id', async (req, res) =>{
     try {
