@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { auth } from "../../firebase-config";
+import imgLoad from "../../../public/loading.gif";
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -7,7 +8,10 @@ function Home() {
   const [expandedContent, setExpandedContent] = useState({});
 
   const handleReadMore = (postId) => {
-    setExpandedContent({ ...expandedContent, [postId]: true });
+    setExpandedContent((prevExpandedContent) => ({
+      ...prevExpandedContent,
+      [postId]: !prevExpandedContent[postId],
+    }));
   };
   const user_id = localStorage.getItem('userUid');
 
@@ -59,7 +63,7 @@ function Home() {
       <h1 className="text-center text-xl">Your Blog Posts</h1>
       {isLoading ? (
         <div className="flex justify-center items-center">
-          <img src="loading.gif" alt="Loading" />
+          <img src={imgLoad} alt="Loading" />
         </div>
       ) : (
         blogPosts.map((post) => (
