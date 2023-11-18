@@ -1,4 +1,7 @@
-const express = require('express');
+const express = require("express");
+const cors = require("cors");
+const multer = require('multer');
+
 const mysql = require('mysql')
 const admin = require('firebase-admin')
 
@@ -6,10 +9,15 @@ admin.initializeApp({
     credential: admin.credential.cert('./service-account.json'),
 });
 
-//Middleware
+
 const app = express();
+
+//Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -26,19 +34,15 @@ db.connect((err) => {
     console.log('Connected to MySQL');
 });
 
-app.post('/create-post', async (req, res) => {
+app.post('/create-post', upload.fields([{ name: 'img', maxCount: 1 }]),async (req, res) => {
     try {
-        // Verify Firebase token
-        const decodedToken = await admin.auth().verifyIdToken(req.body.token);
-    
-        // Insert blog post into MySQL database
-        const { name, img, title, content } = req.body;
-        const userId = decodedToken.uid;
-    
-        const sql = 'INSERT INTO blog_posts (user_id, name, img, title, content) VALUES (?, ?, ?, ?, ?)';
-        db.query(sql, [userId, name, img, title, content], (err, result) => {
+        const { userId, title, content } = req.body;
+        const img = req.files['img'][0].buffer;
+        console.log(img)
+        const sql = 'INSERT INTO blog_posts (user_id, img, title, content) VALUES (?, ?, ?, ?)';
+        db.query(sql, [userId, img, title, content], (err, result) => {
             if (err) throw err;
-            console.log('Blog post inserted:', result);
+            console.log('Blog post inserted');
             res.send('Blog post created successfully');
         });
     }catch (error) {
