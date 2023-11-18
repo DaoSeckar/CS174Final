@@ -20,30 +20,32 @@ function App() {
   };
 
   return (
-    <Router>
-      <nav className="bg-blue-500 p-4">
-        {!isAuth ? (
-          <div className="flex space-x-4">
-            <Link to="/" className="text-white">Sign In</Link>
-            <Link to="/signup" className="text-white">Sign Up</Link>
-          </div>
-        ) : (
-          <div className="flex flex-row justify-between px-10">
-            <div className='flex flex-row gap-10'>             
-            <Link to="/homepage" className="text-white">Home</Link>
-            <Link to="/createpost" className="text-white">Create Post</Link>
+    <div className="app-container bg-gray-300 min-h-screen">
+      <Router>
+        <nav className="bg-blue-500 p-4">
+          {!isAuth ? (
+            <div className="flex space-x-4">
+              <Link to="/" className="text-white">Sign In</Link>
+              <Link to="/signup" className="text-white">Sign Up</Link>
             </div>
-            <button onClick={signUserOut} className="text-white">Log Out</button>
-          </div>
-        )}
-      </nav>
-      <Routes>
-        <Route path="/homepage" element={<Home isAuth={isAuth} />} />
-        <Route path="/createpost" element={<CreatePost isAuth={isAuth} />} />
-        <Route path="/" index element={<SignInForm setIsAuth={setIsAuth} />} />
-        <Route path="/signup" index element={<SignUpForm setIsAuth={setIsAuth} />} />
-      </Routes>
+          ) : (
+            <div className="flex flex-row justify-between px-10">
+              <div className='flex flex-row gap-10'>             
+              <Link to="/homepage" className="text-white">Home</Link>
+              <Link to="/createpost" className="text-white">Create Post</Link>
+              </div>
+              <button onClick={signUserOut} className="text-white">Log Out</button>
+            </div>
+          )}
+        </nav>
+        <Routes>
+          <Route path="/homepage" element={<Home isAuth={isAuth} />} />
+          <Route path="/createpost" element={<CreatePost isAuth={isAuth} />} />
+          <Route path="/" index element={<SignInForm setIsAuth={setIsAuth} />} />
+          <Route path="/signup" index element={<SignUpForm setIsAuth={setIsAuth} />} />
+        </Routes>
     </Router>
+    </div>
   );
 }
 

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {singInWithGooglePopup, signInAuthUserWithEmailAndPassword} from '../../firebase-config'
+import {singInWithGooglePopup, signInAuthUserWithEmailAndPassword, auth} from '../../firebase-config'
 import { useNavigate } from "react-router-dom";
 
 const defaultFormFields = {
@@ -16,6 +16,7 @@ const SignInForm = ({setIsAuth}) =>{
         const response = await singInWithGooglePopup();
         console.log(response);
         localStorage.setItem('isAuth', true);
+        localStorage.setItem('userUid', auth.currentUser.uid);
         setIsAuth(true);
         navigate('/homepage');
     };
@@ -37,6 +38,7 @@ const SignInForm = ({setIsAuth}) =>{
             console.log(response);
             resetFormFields();
             localStorage.setItem('isAuth', true);
+            localStorage.setItem('userUid', auth.currentUser.uid);
             setIsAuth(true);
             navigate('/homepage');
         } catch (err) {
