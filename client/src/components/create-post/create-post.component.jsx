@@ -9,7 +9,7 @@ const defaultFormFields = {
     postText: "",
   };
   
-const CreatePost = ({ isAuth }) => {
+const CreatePost = () => {
   let navigate = useNavigate();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { title, postText } = formFields;

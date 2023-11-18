@@ -34,20 +34,33 @@ db.connect((err) => {
     console.log('Connected to MySQL');
 });
 
-app.post('/create-post', upload.fields([{ name: 'img', maxCount: 1 }]),async (req, res) => {
+app.post('/create-post', upload.fields([{ name: 'img', maxCount: 1 }]), async (req, res) => {
     try {
         const { userId, title, content } = req.body;
         const img = req.files['img'][0].buffer;
-        console.log(img)
         const sql = 'INSERT INTO blog_posts (user_id, img, title, content) VALUES (?, ?, ?, ?)';
         db.query(sql, [userId, img, title, content], (err, result) => {
             if (err) throw err;
             console.log('Blog post inserted');
-            res.send('Blog post created successfully');
+            res.status(200).send('Blog post created successfully');
         });
     }catch (error) {
         console.error('Error creating blog post:', error);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+app.get('/get-post/:user_id', async (req, res) =>{
+    try {
+        const user_id = req.params.user_id;
+        const sql = "SELECT * FROM blog_posts WHERE user_id = ?";
+        db.query(sql, [user_id], (err, result) =>{
+            if (err) throw err;
+            res.status(200).json(result);
+        });
+    } catch (error) {
+        console.error("Error getting all posts", error);
+        res.status(500).send("Internal server error");
     }
 });
 
