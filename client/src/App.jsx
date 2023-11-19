@@ -7,6 +7,7 @@ import Home from "./components/homepage/homepage.component";
 import CreatePost from "./components/create-post/create-post.component";
 import SignInForm from "./components/sign-in/sign-in-form.component";
 import SignUpForm from './components/sign-up/sign-up-form.component';
+import NavBar from './components/navigation/nav-bar';
 
 function App() {
   const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
@@ -20,24 +21,9 @@ function App() {
   };
 
   return (
-    <div className="app-container bg-gray-300 min-h-screen">
+    <div className="app-container bg-stone-300 min-h-screen">
       <Router>
-        <nav className="bg-blue-500 p-4">
-          {!isAuth ? (
-            <div className="flex space-x-4">
-              <Link to="/" className="text-white">Sign In</Link>
-              <Link to="/signup" className="text-white">Sign Up</Link>
-            </div>
-          ) : (
-            <div className="flex flex-row justify-between px-10">
-              <div className='flex flex-row gap-10'>             
-              <Link to="/homepage" className="text-white">Home</Link>
-              <Link to="/createpost" className="text-white">Create Post</Link>
-              </div>
-              <button onClick={signUserOut} className="text-white">Log Out</button>
-            </div>
-          )}
-        </nav>
+        <NavBar isAuth={isAuth} signUserOut={signUserOut}/>
         <Routes>
           <Route path="/homepage" element={<Home isAuth={isAuth} />} />
           <Route path="/createpost" element={<CreatePost isAuth={isAuth} />} />

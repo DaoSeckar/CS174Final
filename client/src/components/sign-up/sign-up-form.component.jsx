@@ -49,7 +49,7 @@ const SignUpForm = ({setIsAuth}) => {
     }
 
     return (
-        <div className="max-w-md mx-auto my-8 p-6 bg-white rounded-md shadow-md">
+        <div className="max-w-md mx-auto my-12 p-6 bg-white rounded-md shadow-md">
             <h2 className="text-2xl font-semibold mb-4">Don't have an account?</h2>
             <span className="text-gray-600">Sign Up with your email and password</span>
 

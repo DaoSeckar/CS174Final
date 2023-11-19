@@ -52,7 +52,8 @@ const SignInForm = ({setIsAuth}) =>{
     }
 
     return (
-        <div className="max-w-md mx-auto my-8 p-6 bg-white rounded-md shadow-md">
+        <div className="max-w-md mx-auto my-12 p-6 bg-white rounded-md shadow-md">
+            <div></div>
             <h2 className="text-2xl font-semibold mb-4">Welcome to Blog Site</h2>
             <span className="text-gray-600">Sign In with your email and password</span>
 

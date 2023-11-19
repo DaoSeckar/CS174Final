@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { auth } from "../../firebase-config";
-import imgLoad from "../../../public/loading.gif";
+import imgLoad from "../../assets/loading.gif";
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,6 +12,7 @@ function Home() {
       [postId]: !prevExpandedContent[postId],
     }));
   };
+
   const user_id = localStorage.getItem('userUid');
 
   useEffect(() => {
@@ -22,7 +22,6 @@ function Home() {
         const data = await response.json();
         if (response.status === 200) {
           setBlogPosts(data);
-          console.log(data)
           setIsLoading(false);
         } else {
           throw new Error("Error");
@@ -67,51 +66,57 @@ function Home() {
   };
 
   return (
-    <div className="grid gap-4 p-20">
-      <h1 className="text-center text-xl">Your Blog Posts</h1>
+    <div className="flex flex-col gap-4 p-20">
+      <h1 className="text-center text-3xl font-mono font-bold">Your Blog Posts</h1>
       {isLoading ? (
         <div className="flex justify-center items-center">
           <img src={imgLoad} alt="Loading" />
         </div>
       ) : (
+        blogPosts.length === 0 ? (
+          <p className="text-center text-xl text-gray-800">You have no Blog Posts yet</p>
+        ) : (
         blogPosts.map((post) => (
-          <div key={post.post_id} className="relative border p-6 rounded-lg shadow-md bg-white">
-            <div className="flex items-center m-4">
+          <div key={post.post_id} className="flex flex-row border p-6 rounded-lg shadow-md bg-white">
+            <div className="flex items-center p-4 mr-4">
               <img
                 src={`data:image/jpeg;base64,${arrayBufferToBase64(post.img.data)}`}
                 alt={`Post ${post.post_id}`}
-                className="w-48 h-48 object-cover mr-4"
+                className="w-56 h-56 object-cover"
                 loading="lazy"
               />
+            </div>
+            <div className="w-full border p-4 rounded-lg shadow-md">
               <div>
                 <h2 className="text-xl font-bold">{post.title}</h2>
                 <p className="text-gray-500 text-sm">{formatCreatedAt(post.created_at)}</p>
               </div>
-            </div>
-            <p className="text-gray-700 m-4">
-              {expandedContent[post.post_id] || post.content.length <= 200
-                ? post.content
-                : `${post.content.substring(0, 200)}... `}
-              {post.content.length > 200 && !expandedContent[post.post_id] && (
-                <span
-                  className="text-blue-500 cursor-pointer"
-                  onClick={() => handleReadMore(post.post_id)}
-                >
-                  Read More
-                </span>
-              )}
-            </p>
-            <div className="absolute bottom-0 right-0 p-2">
-              <button
+            
+              <p className="text-gray-700 mt-4">
+                {expandedContent[post.post_id] || post.content.length <= 200
+                  ? post.content
+                  : `${post.content.substring(0, 200)}... `}
+                {post.content.length > 200 && !expandedContent[post.post_id] && (
+                  <span
+                    className="text-blue-500 cursor-pointer"
+                    onClick={() => handleReadMore(post.post_id)}
+                  >
+                    Read More
+                  </span>
+                )}
+              </p>
+              <div className="flex justify-end p-2">
+                <button
                 className="text-red-500 hover:text-red-700 cursor-pointer"
                 onClick={() => handleDeletePost(post.post_id)}
-              >
+                >
                 Delete
-              </button>
+                </button>
+              </div>
             </div>
           </div>
         ))    
-      )}
+      ))}
     </div>
   );
 }
