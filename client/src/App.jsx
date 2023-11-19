@@ -21,15 +21,17 @@ function App() {
   };
 
   return (
-    <div className="app-container bg-stone-300 min-h-screen">
+    <div className="app-container p-6 bg-stone-300 min-h-screen">
       <Router>
-        <NavBar isAuth={isAuth} signUserOut={signUserOut}/>
-        <Routes>
-          <Route path="/homepage" element={<Home isAuth={isAuth} />} />
-          <Route path="/createpost" element={<CreatePost isAuth={isAuth} />} />
-          <Route path="/" index element={<SignInForm setIsAuth={setIsAuth} />} />
-          <Route path="/signup" index element={<SignUpForm setIsAuth={setIsAuth} />} />
-        </Routes>
+        <div className='justify-center items-center'>
+          <NavBar isAuth={isAuth} signUserOut={signUserOut}/>
+          <Routes>
+            <Route path="/homepage" element={<Home isAuth={isAuth} />} />
+            <Route path="/createpost" element={<CreatePost isAuth={isAuth} />} />
+            <Route path="/" index element={<SignInForm setIsAuth={setIsAuth} />} />
+            <Route path="/signup" index element={<SignUpForm setIsAuth={setIsAuth} />} />
+          </Routes>
+        </div>
     </Router>
     </div>
   );

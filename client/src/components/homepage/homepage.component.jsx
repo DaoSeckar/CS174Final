@@ -106,12 +106,12 @@ function Home() {
                 )}
               </p>
               <div className="flex justify-end p-2">
-                <button
-                className="text-red-500 hover:text-red-700 cursor-pointer"
-                onClick={() => handleDeletePost(post.post_id)}
-                >
+              <button
+              className="text-white bg-red-500 hover:bg-red-700 py-1 px-3 rounded-md cursor-pointer transition duration-300 ease-in-out"
+              onClick={() => handleDeletePost(post.post_id)}
+              >
                 Delete
-                </button>
+              </button>
               </div>
             </div>
           </div>
