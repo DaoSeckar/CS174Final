@@ -1,6 +1,6 @@
 import { useState} from 'react';
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase-config";
 import Home from "./components/homepage/homepage.component";

@@ -50,8 +50,8 @@ const SignUpForm = ({setIsAuth}) => {
 
     return (
         <div className="max-w-md mx-auto my-12 p-6 bg-white rounded-md shadow-md">
-            <h2 className="text-2xl font-semibold mb-4">Don't have an account?</h2>
-            <span className="text-gray-600">Sign Up with your email and password</span>
+            <h2 className="text-2xl font-semibold mb-4 text-center">Don't have an account?</h2>
+            <h3 className="text-gray-600 text-center">Sign Up with your email and password</h3>
 
             <form onSubmit={handleSubmit} className="mt-4">
                 <div className="mb-4">
@@ -106,7 +106,7 @@ const SignUpForm = ({setIsAuth}) => {
                     />
                 </div>
 
-                <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline-green active:bg-green-800">
+                <button type="submit" className="bg-green-500 text-white w-full py-2 mt-3 font-medium rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline-green active:bg-green-800">
                     Sign Up
                 </button>
             </form>

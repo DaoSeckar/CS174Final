@@ -1,6 +1,7 @@
 import { useState } from "react"
 import {singInWithGooglePopup, signInAuthUserWithEmailAndPassword, auth} from '../../firebase-config'
 import { useNavigate } from "react-router-dom";
+import { FaGoogle } from 'react-icons/fa';
 
 const defaultFormFields = {
     email: '',
@@ -54,8 +55,8 @@ const SignInForm = ({setIsAuth}) =>{
     return (
         <div className="max-w-md mx-auto my-12 p-6 bg-white rounded-md shadow-md">
             <div></div>
-            <h2 className="text-2xl font-semibold mb-4">Welcome to Blog Site</h2>
-            <span className="text-gray-600">Sign In with your email and password</span>
+            <h2 className="text-2xl font-semibold mb-4 text-center">Welcome to Blog Site</h2>
+            <h3 className="text-gray-600 text-center">Sign In with your email and password</h3>
 
             <form onSubmit={handleSubmit} className="mt-4">
                 <div className="mb-4">
@@ -71,7 +72,7 @@ const SignInForm = ({setIsAuth}) =>{
                     />
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-6">
                     <label htmlFor="password" className="block text-sm font-medium text-gray-600">Password</label>
                     <input
                         id="password"
@@ -84,13 +85,17 @@ const SignInForm = ({setIsAuth}) =>{
                     />
                 </div>
 
-                <div className="flex items-center justify-between">
-                    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                <div className="flex flex-col items-center">
+                    <button type="submit" className="bg-orange-500 w-full font-medium text-white px-4 py-2 rounded-md hover:bg-orange-400 focus:outline-none focus:shadow-outline-blue active:bg-orange-400">
                         Sign In
                     </button>
-                    
-                    <button type="button" onClick={signInWithGoogle} className="bg-red-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-red-600 focus:outline-none focus:shadow-outline-red active:bg-red-800">
-                        Google Sign In
+                    <p className="my-3"> OR </p>
+                    <button
+                        type="button"
+                        onClick={signInWithGoogle}
+                        className="bg-white w-7/12 px-4 py-2 border rounded-md flex items-center justify-center font-medium hover:bg-gray-100 shadow-md"
+                        >
+                        <FaGoogle className="mr-2 text-blue-500" size={24}/> Sign in with Google
                     </button>
                 </div>
             </form>

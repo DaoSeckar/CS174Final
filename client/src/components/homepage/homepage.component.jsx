@@ -22,6 +22,7 @@ function Home() {
         const data = await response.json();
         if (response.status === 200) {
           setBlogPosts(data);
+          console.log(data);
           setIsLoading(false);
         } else {
           throw new Error("Error");
@@ -66,8 +67,8 @@ function Home() {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-20">
-      <h1 className="text-center text-3xl font-mono font-bold">Your Blog Posts</h1>
+    <div className="flex flex-col gap-5 p-20">
+      <h1 className="text-center text-4xl font-mono font-bold">Your Blog Posts</h1>
       {isLoading ? (
         <div className="flex justify-center items-center">
           <img src={imgLoad} alt="Loading" />
@@ -88,7 +89,7 @@ function Home() {
             </div>
             <div className="w-full border p-4 rounded-lg shadow-md">
               <div>
-                <h2 className="text-xl font-bold">{post.title}</h2>
+                <h2 className="text-2xl font-bold mb-1">{post.title}</h2>
                 <p className="text-gray-500 text-sm">{formatCreatedAt(post.created_at)}</p>
               </div>
             
@@ -107,9 +108,9 @@ function Home() {
               </p>
               <div className="flex justify-end p-2">
               <button
-              className="text-white bg-red-500 hover:bg-red-700 py-1 px-3 rounded-md cursor-pointer transition duration-300 ease-in-out"
-              onClick={() => handleDeletePost(post.post_id)}
-              >
+                className="text-white bg-red-500 hover:bg-red-700 py-1 px-3 rounded-md cursor-pointer transition duration-300 ease-in-out"
+                onClick={() => handleDeletePost(post.post_id)}
+                >
                 Delete
               </button>
               </div>
