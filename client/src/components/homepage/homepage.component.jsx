@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import imgLoad from "../../assets/loading.gif";
+import noImage from "../../assets/noImage.png"
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -81,7 +82,7 @@ function Home() {
           <div key={post.post_id} className="flex flex-row border p-6 rounded-lg shadow-md bg-white">
             <div className="flex items-center p-4 mr-4">
               <img
-                src={`data:image/jpeg;base64,${arrayBufferToBase64(post.img.data)}`}
+                src={post.img !== null ? `data:image/jpeg;base64,${arrayBufferToBase64(post.img.data)}` : noImage}
                 alt={`Post ${post.post_id}`}
                 className="w-56 h-56 object-cover"
                 loading="lazy"

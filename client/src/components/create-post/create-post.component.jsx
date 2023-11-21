@@ -37,8 +37,10 @@ const CreatePost = () => {
         formData.append("title", title);
         formData.append("content", postText);
         // compress image before uploading to firebase storage
-        const compressedImage = await compressImage(img, 800, 600);
-        formData.append("img", compressedImage);
+        if (img !== null) {
+          const compressedImage = await compressImage(img, 800, 600);
+          formData.append("img", compressedImage);
+        } else formData.append("img", img);
         const response = await fetch("http://localhost:3000/create-post", {
           method: "POST",
           body: formData,

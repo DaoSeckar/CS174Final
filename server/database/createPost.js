@@ -1,7 +1,12 @@
 async function createPost(req, res, db) {
     try {
       const { userId, title, content } = req.body;
-      const img = req.files['img'][0].buffer;
+      let img = null;
+
+      // Check if 'img' field is present in req.files
+      if (req.files && req.files['img'] && req.files['img'][0]) {
+          img = req.files['img'][0].buffer;
+      }
       const sql = 'INSERT INTO blog_posts (user_id, img, title, content) VALUES (?, ?, ?, ?)';
       
       db.query(sql, [userId, img, title, content], (err, result) => {
